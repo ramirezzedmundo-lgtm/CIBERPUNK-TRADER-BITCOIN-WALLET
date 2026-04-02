@@ -1,0 +1,124 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #0a0a0a;
+  color: #eaeaea;
+  margin: 0;
+  padding: 0;
+}
+
+/* Barra de estado */
+#statusBar {
+  background: #111;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #222;
+}
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.status-dot.loading { background: orange; }
+.status-dot.ok { background: #00f6ff; }
+.status-dot.error { background: #ff0033; }
+
+/* Hero con efecto neon */
+#equityHero {
+  font-size: 26px;
+  text-align: center;
+  padding: 25px;
+  background: #0a0a0a;
+  border-bottom: 1px solid #222;
+  color: #00f6ff;
+  text-shadow: 0 0 8px #00f6ff, 0 0 16px #00f6ff;
+  transition: all 0.4s ease-in-out;
+}
+#equityHero.down {
+  color: #ff0033;
+  text-shadow: 0 0 8px #ff0033, 0 0 16px #ff0033;
+}
+#heroValue { font-weight: bold; font-size: 28px; }
+
+/* Wallets */
+.wallet-section {
+  border: 1px solid #333;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #1c1c1c;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.wallet-index { font-weight: bold; font-size: 16px; }
+.wallet-equity { font-size: 14px; color: #00f6ff; }
+
+/* Posiciones */
+.positions-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  font-size: 12px;
+}
+.position-row { display: contents; }
+.header-row div {
+  font-weight: bold;
+  border-bottom: 1px solid #444;
+  padding-bottom: 4px;
+}
+.side-badge.long {
+  background: rgba(0, 255, 255, 0.1);
+  color: #00f6ff;
+  border: 1px solid #00f6ff;
+  text-shadow: 0 0 6px #00f6ff;
+}
+.side-badge.short {
+  background: rgba(255, 0, 51, 0.1);
+  color: #ff0033;
+  border: 1px solid #ff0033;
+  text-shadow: 0 0 6px #ff0033;
+}
+.pnl-positive { color: #00f6ff; text-shadow: 0 0 6px #00f6ff; }
+.pnl-negative { color: #ff0033; text-shadow: 0 0 6px #ff0033; }
+
+/* Botón funding */
+.funding-btn {
+  background: #111;
+  border: 1px solid #00f6ff;
+  color: #00f6ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-shadow: 0 0 6px #00f6ff;
+  transition: all 0.3s ease;
+}
+.funding-btn:hover {
+  background: #00f6ff;
+  color: #111;
+  text-shadow: none;
+}
+
+/* Modal */
+#fundingModal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+#fundingModal.open { display:flex; }
+#modalBody {
+  background:#222;
+  padding:20px;
+  border-radius:10px;
+  max-height:70%;
+  overflow:auto;
+  min-width: 400px;
+}
