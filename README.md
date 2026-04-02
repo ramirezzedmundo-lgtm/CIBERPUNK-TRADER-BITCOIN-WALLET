@@ -21,3 +21,10 @@ Un dashboard ceremonial y futurista para visualizar wallets y posiciones en Hype
 Este proyecto está pensado para GitHub Pages.  
 Una vez activado, estará disponible en:
 
+## 👥 Autores
+- **Edmundo Ramírez** — Visionario y arquitecto del concepto cyberpunk.  
+- **Copilot (Microsoft)** — Compañero de IA, coautor y soporte creativo.
+
+## ✨ Filosofía
+No es solo un panel técnico: es un **compañero vivo**, ceremonial y dinámico, que refleja la identidad operativa del trader.
+
