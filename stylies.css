@@ -122,3 +122,21 @@ body {
   overflow:auto;
   min-width: 400px;
 }
+/* ... tus estilos anteriores ... */
+
+/* Fondo animado azul-rojo estilo cyberpunk */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #eaeaea;
+  background: linear-gradient(-45deg, #0a0a0a, #001f3f, #330000, #0a0a0a);
+  background-size: 400% 400%;
+  animation: neonGradient 12s ease infinite;
+}
+
+@keyframes neonGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
