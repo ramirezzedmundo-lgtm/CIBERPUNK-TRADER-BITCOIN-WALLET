@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Hyperliquid</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="statusBar">
+    <span id="statusDot" class="status-dot"></span>
+    <span id="statusText">Iniciando...</span>
+  </div>
+
+  <div id="equityHero">
+    Equity total: <span id="heroValue">—</span>
+  </div>
+
+  <div id="walletContainer"></div>
+
+  <div>
+    <label>Intervalo de refresco (segundos):</label>
+    <input id="refreshInterval" type="number" value="30" onchange="setRefreshInterval()">
+  </div>
+
+  <!-- Modal de Funding -->
+  <div id="fundingModal" onclick="closeFundingModal(event)">
+    <div id="modalBody">
+      <div id="modalCoinTag"></div>
+      <div id="modalWalletTag"></div>
+      <div id="modalTotalFunding"></div>
+      <div id="modalPaymentCount"></div>
+      <div id="modalAvgFunding"></div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
