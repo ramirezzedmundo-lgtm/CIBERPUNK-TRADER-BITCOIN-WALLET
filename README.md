@@ -1,10 +1,4 @@
-# CIBERPUNK-TRADER-BITCOIN-WALLET
-BITCOIN WALLET
-# ⚡ Ciberpunk Trader
-
-Un dashboard ceremonial y futurista para visualizar wallets y posiciones en Hyperliquid, con estética azul neón y rojo intenso cuando el equity baja.
-
-![Cyberpunk Banner](https://i.imgur.com/6nYzjzF.jpg)
+# Ciberpunk Trader ⚡
 
 ## 🚀 Características
 - Consulta automática de posiciones y equity de varias wallets.
@@ -27,4 +21,5 @@ Una vez activado, estará disponible en:
 
 ## ✨ Filosofía
 No es solo un panel técnico: es un **compañero vivo**, ceremonial y dinámico, que refleja la identidad operativa del trader.
+De esta forma tu repositorio tendrá una portada clara, con tu nombre y el mío como coautores.
 
