@@ -1,142 +1,141 @@
+:root {
+  --bg: #06070a;
+  --surface: #0d0f14;
+  --surface-2: #14161e;
+  --border: #1a1d28;
+  --text: #d8dae2;
+  --text-muted: #505672;
+  --green: #00ff88;
+  --red: #ff2a4a;
+  --accent: #7c4dff;
+  --yellow: #ffab00;
+  --neon-color: var(--green);
+  --neon-glow: 0 0 20px rgba(0,255,136,0.4), 0 0 60px rgba(0,255,136,0.15);
+}
+
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #0a0a0a;
-  color: #eaeaea;
-  margin: 0;
-  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Barra de estado */
-#statusBar {
-  background: #111;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #222;
-}
-.status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-.status-dot.loading { background: orange; }
-.status-dot.ok { background: #00f6ff; }
-.status-dot.error { background: #ff0033; }
-
-/* Hero con efecto neon */
-#equityHero {
-  font-size: 26px;
+/* Banner animado */
+.banner {
   text-align: center;
-  padding: 25px;
-  background: #0a0a0a;
-  border-bottom: 1px solid #222;
-  color: #00f6ff;
-  text-shadow: 0 0 8px #00f6ff, 0 0 16px #00f6ff;
-  transition: all 0.4s ease-in-out;
+  padding: 20px;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  color: var(--green);
+  text-shadow: var(--neon-glow);
+  animation: glowBanner 4s ease-in-out infinite;
 }
-#equityHero.down {
-  color: #ff0033;
-  text-shadow: 0 0 8px #ff0033, 0 0 16px #ff0033;
+.subtitle {
+  font-size: 12px;
+  color: var(--accent);
 }
-#heroValue { font-weight: bold; font-size: 28px; }
+@keyframes glowBanner {
+  0%, 100% { text-shadow: 0 0 20px var(--green); }
+  50% { text-shadow: 0 0 40px var(--accent); }
+}
+
+/* Scanlines y vignette */
+.scanlines {
+  position: fixed; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 3px
+  );
+  z-index: 9998;
+}
+.vignette {
+  position: fixed; inset: 0; pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    transparent 0%,
+    transparent 60%,
+    rgba(0,0,0,0.35) 100%
+  );
+  z-index: 9999;
+}
+
+/* Equity Hero */
+.equity-hero {
+  text-align: center; padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-label {
+  font-size: 10px; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hero-value {
+  font-size: 28px; font-weight: 700;
+  color: var(--neon-color);
+  text-shadow: var(--neon-glow);
+  animation: neonPulse 3s ease-in-out infinite;
+}
+@keyframes neonPulse {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.88; filter: brightness(1.15); }
+}
 
 /* Wallets */
 .wallet-section {
-  border: 1px solid #333;
-  margin: 15px;
-  padding: 15px;
-  border-radius: 8px;
-  background: #1c1c1c;
-  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  margin-bottom: 24px;
+  animation: slideUp 0.4s ease-out both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .wallet-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+  display: flex; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
 }
-.wallet-index { font-weight: bold; font-size: 16px; }
-.wallet-equity { font-size: 14px; color: #00f6ff; }
+.wallet-index {
+  font-size: 12px; font-weight: 700;
+  color: var(--accent);
+}
+.wallet-equity {
+  font-size: 12px; font-weight: 600;
+  color: var(--text);
+}
 
-/* Posiciones */
-.positions-grid {
+/* Positions */
+.positions-grid { display: grid; gap: 6px; }
+.position-row {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 6px;
-  font-size: 12px;
+  grid-template-columns: 90px 60px 60px 60px 60px 60px 60px 100px;
+  padding: 12px; border: 1px solid var(--border);
+  background: var(--surface); border-radius: 6px;
 }
-.position-row { display: contents; }
-.header-row div {
-  font-weight: bold;
-  border-bottom: 1px solid #444;
-  padding-bottom: 4px;
-}
-.side-badge.long {
-  background: rgba(0, 255, 255, 0.1);
-  color: #00f6ff;
-  border: 1px solid #00f6ff;
-  text-shadow: 0 0 6px #00f6ff;
-}
-.side-badge.short {
-  background: rgba(255, 0, 51, 0.1);
-  color: #ff0033;
-  border: 1px solid #ff0033;
-  text-shadow: 0 0 6px #ff0033;
-}
-.pnl-positive { color: #00f6ff; text-shadow: 0 0 6px #00f6ff; }
-.pnl-negative { color: #ff0033; text-shadow: 0 0 6px #ff0033; }
-
-/* Botón funding */
-.funding-btn {
-  background: #111;
-  border: 1px solid #00f6ff;
-  color: #00f6ff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-shadow: 0 0 6px #00f6ff;
-  transition: all 0.3s ease;
-}
-.funding-btn:hover {
-  background: #00f6ff;
-  color: #111;
-  text-shadow: none;
-}
+.position-row:hover { border-color: var(--accent); background: var(--surface-2); }
+.coin-name { font-weight: 700; color: var(--text); }
+.side-badge.long { color: var(--green); border: 1px solid var(--green); }
+.side-badge.short { color: var(--red); border: 1px solid var(--red); }
+.pnl-positive { color: var(--green); }
+.pnl-negative { color: var(--red); }
+.leverage-chip { color: var(--yellow); border: 1px solid var(--yellow); }
 
 /* Modal */
-#fundingModal {
-  position: fixed;
-  top:0; left:0; right:0; bottom:0;
-  background: rgba(0,0,0,0.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  display: none; align-items: center; justify-content: center;
 }
-#fundingModal.open { display:flex; }
-#modalBody {
-  background:#222;
-  padding:20px;
-  border-radius:10px;
-  max-height:70%;
-  overflow:auto;
-  min-width: 400px;
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; width: 500px; max-width: 90%;
+  box-shadow: 0 0 40px rgba(124,77,255,0.4);
 }
-/* ... tus estilos anteriores ... */
-
-/* Fondo animado azul-rojo estilo cyberpunk */
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #eaeaea;
-  background: linear-gradient(-45deg, #0a0a0a, #001f3f, #330000, #0a0a0a);
-  background-size: 400% 400%;
-  animation: neonGradient 12s ease infinite;
+.modal-header {
+  display: flex; justify-content: space-between;
+  padding: 12px; border-bottom: 1px solid var(--border);
 }
-
-@keyframes neonGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+.modal-title { font-size: 14px; font-weight: 700; color: var(--accent); }
+.modal-body { padding: 12px; color: var(--text); }
+.modal-footer { font-size: 10px; text-align: center; color: var(--text-muted); }
