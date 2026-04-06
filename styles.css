@@ -1,141 +1,252 @@
-root {
-  --bg: #06070a;
-  --surface: #0d0f14;
-  --surface-2: #14161e;
-  --border: #1a1d28;
-  --text: #d8dae2;
-  --text-muted: #505672;
-  --green: #00ff88;
-  --red: #ff2a4a;
-  --accent: #7c4dff;
-  --yellow: #ffab00;
-  --neon-color: var(--green);
-  --neon-glow: 0 0 20px rgba(0,255,136,0.4), 0 0 60px rgba(0,255,136,0.15);
+.citymap{
+  position: relative;
+  width: min(100%, 980px);
+  margin: 1.2em auto;
+  font-family: "Source code pro", sans-serif;
+  border-radius: 30px;
+  overflow:hidden;
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
-  min-height: 100vh;
-  overflow-x: hidden;
+.citymap__img{
+  display:block;
+  width:100%;
+  height:auto;
 }
 
-/* Banner animado */
-.banner {
-  text-align: center;
+/** ici je mets les districts tmtc **/
+.district-label{
+  position:absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%,-50%);
+  z-index: 4;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 650;
+  color: rgba(235,235,245,.70);
+
+  cursor: help;
+  user-select: none;
   padding: 20px;
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
-  color: var(--green);
-  text-shadow: var(--neon-glow);
-  animation: glowBanner 4s ease-in-out infinite;
 }
-.subtitle {
+
+.district-label::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%,-50%) scale(.95);
+  background: radial-gradient(circle,
+    rgba(155,110,255,.24) 0%,
+    rgba(155,110,255,.12) 35%,
+    rgba(155,110,255,.99) 70%
+  );
+  opacity: 0;
+  filter: blur(2px);
+  transition: opacity .22s ease, transform .22s ease;
+  pointer-events:none;
+  z-index: -1; /* le halo passe derrière le texte */
+}
+
+.district-label:hover::after{
+  opacity: 1;
+  transform: translate(-50%,-50%) scale(1.25);
+}
+
+
+
+/* Tooltip districts */
+.district-tooltip{
+  position:absolute;
+  left: 50%;
+  top: 90%;
+  transform: translateX(-50%);
+  text-transform:none;
+  min-width: 220px;
+  max-width: 280px;
+  padding: 10px 12px;
+  border-radius: 20px;
+font-family: 'Roboto', sans-serif;
+  background: rgba(10,10,10,0.2);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 1px 10px rgba(0,0,0,.55);
+font-weight: normal;
+  color: rgba(235,235,245,.95);
+  font-size: 11px;
+  line-height: 1.25;
+z-index: 999 !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.district-label:hover .district-tooltip{
+  opacity: 1;
+  transform: translateX(-50%) translateY(4px);
+}
+
+.district-tooltip strong{
+  display:block;
+font-size: 13px;  margin-bottom: 4px;
+  font-weight: normal;
+}
+.district-tooltip p{
+  margin: 0 0 6px;
+  opacity: .8;
+  font-family: 'roboto', sans-serif;
+}
+
+
+/** ici on met les points de tension **/
+.hotspot{
+  position:absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%,-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+
+  /* accent par défaut = violet */
+  --accent: 155,110,255;
+
+  z-index: 1;
+  cursor: crosshair;
+}
+
+/* Variantes couleur */
+.hotspot.danger{ --accent: 255,90,80; }   /* rouge */
+.hotspot.police{ --accent: 90,190,255; }  /* bleu */
+
+/* point central */
+.hotspot::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background: rgb(var(--accent));
+  box-shadow:
+    0 0 8px rgba(var(--accent), .85),
+    0 0 22px rgba(var(--accent), .45);
+}
+
+/* cercle pulsant */
+.hotspot::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width: 12px;
+  height: 12px;
+  border-radius:999px;
+  background: rgba(var(--accent), .22);
+  transform: translate(-50%,-50%);
+  animation: pulseZone 2.8s ease-out infinite;
+}
+
+/* animation pulse */
+@keyframes pulseZone{
+  0%   { width:12px; height:12px; opacity:.45; }
+  70%  { width:90px; height:90px; opacity:.14; }
+  100% { width:120px; height:120px; opacity:0; }
+}
+
+.hotspot:hover::before{
+  box-shadow:
+    0 0 12px rgba(var(--accent), .95),
+    0 0 36px rgba(var(--accent), .55);
+}
+.hotspot:hover::after{
+  background: rgba(var(--accent), .30);
+}
+
+/* Tooltip points de tension */
+.hotspot__tip{
+  position:absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(10,10,16,.92);
+  border: 1px solid rgba(180,160,255,.18);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+
+  color: rgba(235,235,245,.95);
   font-size: 12px;
-  color: var(--accent);
-}
-@keyframes glowBanner {
-  0%, 100% { text-shadow: 0 0 20px var(--green); }
-  50% { text-shadow: 0 0 40px var(--accent); }
+  line-height: 1.15;
+
+  opacity: 0;
+  pointer-events:none;
+  transition: opacity .18s ease, transform .18s ease;
+  white-space: nowrap;
+
+  z-index: 20;
 }
 
-/* Scanlines y vignette */
-.scanlines {
-  position: fixed; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    rgba(0,0,0,0.08) 2px,
-    rgba(0,0,0,0.08) 3px
-  );
-  z-index: 9998;
+.hotspot__tip strong{
+  display:block;
+  font-weight: 650;
+  margin-bottom: 2px;
 }
-.vignette {
-  position: fixed; inset: 0; pointer-events: none;
+.hotspot__tip em{
+  display:block;
+  font-style: normal;
+  opacity: .75;
+}
+
+.hotspot:hover .hotspot__tip{
+  opacity: 1;
+  transform: translateY(-50%) translateX(4px);
+}
+
+
+@media (max-width: 520px){
+  .district-tooltip{
+    min-width: 180px;
+    max-width: 220px;
+  }
+  .hotspot__tip{
+    white-space: normal;
+    max-width: 200px;
+  }
+}
+
+.citymap__img{
+  animation: cityBreath 18s ease-in-out infinite;
+}
+
+@keyframes cityBreath{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.015); }
+}
+
+/** test **/
+
+.district-label::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width: 180px;
+  height: 120px;
+  transform: translate(-50%,-50%);
   background: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    transparent 0%,
-    transparent 60%,
-    rgba(0,0,0,0.35) 100%
+    circle,
+    rgba(155,110,255,.15),
+    rgba(155,110,255,0) 70%
   );
-  z-index: 9999;
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events:none;
 }
 
-/* Equity Hero */
-.equity-hero {
-  text-align: center; padding: 20px;
-  border-bottom: 1px solid var(--border);
-}
-.hero-label {
-  font-size: 10px; text-transform: uppercase;
-  color: var(--text-muted);
-}
-.hero-value {
-  font-size: 28px; font-weight: 700;
-  color: var(--neon-color);
-  text-shadow: var(--neon-glow);
-  animation: neonPulse 3s ease-in-out infinite;
-}
-@keyframes neonPulse {
-  0%, 100% { opacity: 1; filter: brightness(1); }
-  50% { opacity: 0.88; filter: brightness(1.15); }
+.district-label:hover::after{
+  opacity: 1;
 }
 
-/* Wallets */
-.wallet-section {
-  margin-bottom: 24px;
-  animation: slideUp 0.4s ease-out both;
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.wallet-header {
-  display: flex; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 8px;
-}
-.wallet-index {
-  font-size: 12px; font-weight: 700;
-  color: var(--accent);
-}
-.wallet-equity {
-  font-size: 12px; font-weight: 600;
-  color: var(--text);
-}
 
-/* Positions */
-.positions-grid { display: grid; gap: 6px; }
-.position-row {
-  display: grid;
-  grid-template-columns: 90px 60px 60px 60px 60px 60px 60px 100px;
-  padding: 12px; border: 1px solid var(--border);
-  background: var(--surface); border-radius: 6px;
-}
-.position-row:hover { border-color: var(--accent); background: var(--surface-2); }
-.coin-name { font-weight: 700; color: var(--text); }
-.side-badge.long { color: var(--green); border: 1px solid var(--green); }
-.side-badge.short { color: var(--red); border: 1px solid var(--red); }
-.pnl-positive { color: var(--green); }
-.pnl-negative { color: var(--red); }
-.leverage-chip { color: var(--yellow); border: 1px solid var(--yellow); }
-
-/* Modal */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-  display: none; align-items: center; justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; width: 500px; max-width: 90%;
-  box-shadow: 0 0 40px rgba(124,77,255,0.4);
-}
-.modal-header {
-  display: flex; justify-content: space-between;
-  padding: 12px; border-bottom: 1px solid var(--border);
-}
-.modal-title { font-size: 14px; font-weight: 700; color: var(--accent); }
-.modal-body { padding: 12px; color: var(--text); }
-.modal-footer { font-size: 10px; text-align: center; color: var(--text-muted); }
