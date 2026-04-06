@@ -1,11 +1,10 @@
 const wallets = [
   "0x1234567890abcdef...", // aquí pones tus wallets
-  "0xabcdef1234567890..."
+  "0xabcdef1234567890....
 ];
 
 let refreshInterval = 30000; // 30 segundos por defecto
-let refreshTimer;
-
+let refreshTimer. 
 async function fetchWalletData(wallet) {
   try {
     const response = await fetch("https://api.hyperliquid.xyz/info", {
@@ -40,10 +39,3 @@ function renderWallet(wallet, data) {
 - `styles.css` → estética CRT con neón, scanlines y animaciones.  
 - `dashboard.js` → conexión a la API de Hyperliquid y render dinámico de wallets y posiciones.  
 
-Todo está enlazado y funcionando en GitHub Pages. Lo único que debes hacer es:  
-
-1. **Subir los tres archivos al repo** (`index.html`, `styles.css`, `dashboard.js`).  
-2. Confirmar que tu `index.html` tiene los enlaces correctos:  
-   ```html
-   <link rel="stylesheet" href="styles.css">
-   <script src="dashboard.js"></script>
